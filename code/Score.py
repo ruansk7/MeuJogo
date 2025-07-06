@@ -10,3 +10,5 @@ def save_high_score(score):
     if score > high_score:
         with open("highscore.txt", "w") as f:
             f.write(str(score))
+
+# Developed by: Saulo Ruan Nascimento Oliveira

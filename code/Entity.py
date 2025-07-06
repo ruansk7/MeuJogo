@@ -13,3 +13,5 @@ class Entity(ABC):
     @abstractmethod    
     def move(self, ):
         pass
+    
+# Developed by: Saulo Ruan Nascimento Oliveira

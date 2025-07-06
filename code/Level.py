@@ -4,7 +4,7 @@ import time
 from tkinter.font import Font
 import pygame
 from code.Background import Background
-from code.Const import C_WHITE, EVENT_ENEMY, SPAWN_TIME, WIN_HEIGHT, WIN_WIDTH
+from code.Const import EVENT_ENEMY, SPAWN_TIME, WIN_HEIGHT, WIN_WIDTH
 from code.Entity import Entity
 from code.EntityFactory import EntityFactory
 from code.Explosion import Explosion
@@ -53,18 +53,16 @@ class Level:
         next_bg_entities = EntityFactory.get_entity(next_bg_name)
 
         if not next_bg_entities:
-            return  # evita crash se o fundo não existir
+            return 
 
         for alpha in range(0, 256, 10):  # fade in
             self.window.fill((0, 0, 0))
 
-            # fundo atual
             for ent in self.entity_list:
                 if hasattr(ent, 'surf') and hasattr(ent, 'rect'):
                     if isinstance(ent, Background):
                         self.window.blit(ent.surf, ent.rect)
-
-            # novo fundo com transparência crescente
+                        
             for new_bg in next_bg_entities:
                 if hasattr(new_bg, 'surf') and hasattr(new_bg, 'rect'):
                     faded_surf = new_bg.surf.copy()
@@ -159,7 +157,7 @@ class Level:
             current_time = time.time()
             time_this_level = current_time - self.start_time  # tempo em segundos no nível atual
 
-            score_rate = 5  # pontos por segundo (pode ajustar)
+            score_rate = 5  # pontos por segundo
             total_score = self.score + int(time_this_level * score_rate)
 
             elapsed_time = time_this_level * 1000  # milissegundos
@@ -217,3 +215,5 @@ class Level:
         text_surf: pygame.Surface = text_font.render(text, True, text_color).convert_alpha()
         text_rect: pygame.Rect = text_surf.get_rect(center=text_center_pos)
         self.window.blit(source=text_surf, dest=text_rect)
+        
+# Developed by: Saulo Ruan Nascimento Oliveira

@@ -22,7 +22,7 @@ class EntityFactory:
                     file_path = os.path.join(asset_dir, file_name)
                     
                     if not os.path.isfile(file_path):
-                        break  # parar se não existir mais
+                        break
 
                     list_bg.append(Background(f'{bg_name}{i}', (0,0)))
                     list_bg.append(Background(f'{bg_name}{i}', (WIN_WIDTH, 0)))
@@ -36,4 +36,5 @@ class EntityFactory:
                 return Enemy('Enemy1', (WIN_WIDTH + 10, random.randint(40, WIN_HEIGHT - 40)))
             case 'Enemy2':
                 return Enemy('Enemy2', (WIN_WIDTH + 10, random.randint(40, WIN_HEIGHT - 40)))
-    
+   
+# Developed by: Saulo Ruan Nascimento Oliveira 

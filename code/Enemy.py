@@ -1,6 +1,3 @@
-
-
-
 from code.Const import ENTITY_SPEED, WIN_WIDTH
 from code.Entity import Entity
 
@@ -14,3 +11,4 @@ class Enemy(Entity):
         if self.rect.right <= 0:
             self.rect.left = WIN_WIDTH
             
+# Developed by: Saulo Ruan Nascimento Oliveira

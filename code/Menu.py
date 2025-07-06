@@ -66,11 +66,10 @@ class Menu:
         clock = pygame.time.Clock()
         running = True
 
-        # Aqui você pode buscar o score real, por agora só um exemplo fixo
         high_score = load_high_score()
 
         while running:
-            self.window.fill((0, 0, 0))  # fundo preto
+            self.window.fill((0, 0, 0))
 
             title = font.render("HIGHEST SCORE", True, (0, 255, 255))
             title_rect = title.get_rect(center=(WIN_WIDTH // 2, 100))
@@ -97,10 +96,9 @@ class Menu:
 
     
     def menu_text(self, text_size: int, text: str, text_color: tuple, text_center_pos: tuple, glow=False):
-        # Fonte futurista (pode trocar por outras que você tenha no sistema)
+
         text_font: Font = pygame.font.Font('./asset/fonts/Orbitron-Bold.ttf', text_size)
 
-        # Camada de brilho leve (glow)
         if glow:
             glow_surf = text_font.render(text, True, (100, 255, 255))
             glow_surf.set_alpha(80)
@@ -112,3 +110,4 @@ class Menu:
         text_rect: Rect = text_surf.get_rect(center=text_center_pos)
         self.window.blit(text_surf, text_rect)
 
+# Developed by: Saulo Ruan Nascimento Oliveira

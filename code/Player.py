@@ -20,3 +20,5 @@ class Player(Entity):
         if pressed_key[pygame.K_RIGHT] and self.rect.right < WIN_WIDTH:
             self.rect.centerx += ENTITY_SPEED[self.name]       
         pass
+    
+# Developed by: Saulo Ruan Nascimento Oliveira

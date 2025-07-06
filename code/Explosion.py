@@ -1,5 +1,3 @@
-# code/Explosion.py
-
 import pygame
 
 class Explosion:
@@ -28,3 +26,5 @@ class Explosion:
     def draw(self, surface):
         if not self.done:
             surface.blit(self.frames[self.index], self.position)
+
+# Developed by: Saulo Ruan Nascimento Oliveira

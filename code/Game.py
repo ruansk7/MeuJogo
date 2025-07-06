@@ -27,4 +27,6 @@ class Game:
                         current_level = result.get("next_level")
                         score = result.get("score", 0)
                     else:
-                        current_level = result  # fallback caso antigo
+                        current_level = result 
+                        
+# Developed by: Saulo Ruan Nascimento Oliveira
