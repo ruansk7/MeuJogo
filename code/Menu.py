@@ -5,7 +5,8 @@ import pygame.image
 from pygame import Surface, Rect
 from pygame.font import Font
 
-from code.Const import C_CYAN, WIN_WIDTH, C_ORANGE, MENU_OPTION, C_WHITE, C_YELLOW
+from code.Const import C_CYAN, WIN_HEIGHT, WIN_WIDTH, C_ORANGE, MENU_OPTION, C_WHITE, C_YELLOW
+from code.Score import load_high_score
 
 
 class Menu:
@@ -21,14 +22,15 @@ class Menu:
         while True:
             # DRAW IMAGES
             self.window.blit(source=self.surf, dest=self.rect)
-            self.menu_text(50, "Cyber", C_CYAN, ((WIN_WIDTH / 2), 70))
-            self.menu_text(50, "Jump", C_CYAN, ((WIN_WIDTH / 2), 120))
+            self.menu_text(60, "CYBER", (0, 255, 255), (WIN_WIDTH // 2, 80), glow=True)
+            self.menu_text(60, "FLY", (255, 0, 255), (WIN_WIDTH // 2, 140), glow=True)
 
-            for i in range(len(MENU_OPTION)):
+            for i, opt in enumerate(MENU_OPTION):
+                y_pos = 200 + 35 * i
                 if i == menu_option:
-                    self.menu_text(20, MENU_OPTION[i], C_YELLOW, ((WIN_WIDTH / 2), 200 + 25 * i))
+                    self.menu_text(24, f"> {opt}", C_YELLOW, (WIN_WIDTH // 2, y_pos), glow=True)
                 else:
-                    self.menu_text(20, MENU_OPTION[i], C_WHITE, ((WIN_WIDTH / 2), 200 + 25 * i))
+                    self.menu_text(20, opt, C_WHITE, (WIN_WIDTH // 2, y_pos))
             pygame.display.flip()
 
             # Check for all events
@@ -48,10 +50,65 @@ class Menu:
                         else:
                             menu_option = len(MENU_OPTION) - 1
                     if event.key == pygame.K_RETURN:
-                        return MENU_OPTION[menu_option]
+                        selected_option = MENU_OPTION[menu_option]
+                        if selected_option == "SCORE":
+                            self.show_score()
+                        elif selected_option == "EXIT":
+                            pygame.quit()
+                            quit()   # encerra o jogo imediatamente
+                        else:
+                            return selected_option
 
-    def menu_text(self, text_size: int, text: str, text_color: tuple, text_center_pos: tuple):
-        text_font: Font = pygame.font.SysFont(name="Lucida Sans Typewriter", size=text_size)
-        text_surf: Surface = text_font.render(text, True, text_color).convert_alpha()
+
+
+    def show_score(self):
+        font = pygame.font.Font('./asset/fonts/Orbitron-Bold.ttf', 30)
+        clock = pygame.time.Clock()
+        running = True
+
+        # Aqui você pode buscar o score real, por agora só um exemplo fixo
+        high_score = load_high_score()
+
+        while running:
+            self.window.fill((0, 0, 0))  # fundo preto
+
+            title = font.render("HIGHEST SCORE", True, (0, 255, 255))
+            title_rect = title.get_rect(center=(WIN_WIDTH // 2, 100))
+            self.window.blit(title, title_rect)
+
+            score_text = font.render(str(high_score), True, (255, 255, 0))
+            score_rect = score_text.get_rect(center=(WIN_WIDTH // 2, 180))
+            self.window.blit(score_text, score_rect)
+
+            info = font.render("Press ENTER or ESC to return", True, (255, 255, 255))
+            info_rect = info.get_rect(center=(WIN_WIDTH // 2, WIN_HEIGHT - 50))
+            self.window.blit(info, info_rect)
+
+            pygame.display.flip()
+            clock.tick(60)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key in [pygame.K_RETURN, pygame.K_ESCAPE]:
+                        running = False
+
+    
+    def menu_text(self, text_size: int, text: str, text_color: tuple, text_center_pos: tuple, glow=False):
+        # Fonte futurista (pode trocar por outras que você tenha no sistema)
+        text_font: Font = pygame.font.Font('./asset/fonts/Orbitron-Bold.ttf', text_size)
+
+        # Camada de brilho leve (glow)
+        if glow:
+            glow_surf = text_font.render(text, True, (100, 255, 255))
+            glow_surf.set_alpha(80)
+            glow_rect = glow_surf.get_rect(center=text_center_pos)
+            self.window.blit(glow_surf, glow_rect)
+
+        # Camada principal
+        text_surf: Surface = text_font.render(text, True, text_color)
         text_rect: Rect = text_surf.get_rect(center=text_center_pos)
-        self.window.blit(source=text_surf, dest=text_rect)
+        self.window.blit(text_surf, text_rect)
+
